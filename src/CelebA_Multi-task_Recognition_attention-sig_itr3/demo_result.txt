@@ -1,0 +1,4 @@
+demo_output/000000,Black_Hair,Male,No_Beard,Straight_Hair,Young,
+demo_output/000001,Eyeglasses,Male,No_Beard,Young,
+demo_output/000002,5_o_Clock_Shadow,Bags_Under_Eyes,Bangs,Black_Hair,Male,No_Beard,Young,
+demo_output/000003,Male,No_Beard,Oval_Face,
