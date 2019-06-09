@@ -35,11 +35,6 @@ def parse_arguments():
 
 
 def load_module(module_path):
-    '''
-    module_path: モジュールへのパス(フォルダ・拡張子含む)
-    return ロードされたモジュール
-    '''
-
     head, tail = path.split(module_path)
     module_name = path.splitext(tail)[0]
     info = imp.find_module(module_name, [head])
@@ -47,14 +42,7 @@ def load_module(module_path):
 
 
 def get_model_optimizer(result_folder, cfg_mod):
-    '''
-    学習するネットワークモデルの構築
-    パラメータの更新方法を選択
-    '''
-
     model_fn = path.basename(cfg_mod.SRC_MODEL)
-
-    # モデルのパラメータを取得
     useModel   = path.join(result_folder, cfg_mod.EVAL_PARAM_PATH)
 
     InNet_p = path.join(result_folder, cfg_mod.SRC_MODEL)
@@ -62,7 +50,7 @@ def get_model_optimizer(result_folder, cfg_mod):
     serializers.load_npz(useModel, src_model)
     # serializers.load_npz(useModel, src_model)
     src_model.train = False
-    # モデルをGPUに保存
+
     if cfg_mod.GPU_FLAG >= 0:
         src_model.to_gpu()
 
@@ -102,7 +90,6 @@ if __name__ == '__main__':
         class_name = pickle.load(f)
     class_name = class_name[:-1]
 
-    # GPUの使用判定
     if cuda.available and cfg_mod.GPU_FLAG >= 0:
         cuda.get_device(cfg_mod.GPU_FLAG).use()
 
@@ -111,7 +98,6 @@ if __name__ == '__main__':
     chainer.config.train = False
     raw_c_matrix = np.zeros((cfg_mod.CLASS, cfg_mod.CLASS))
 
-    # 更新する方のネットワークモデルを取得
     src_model = get_model_optimizer(result_folder, cfg_mod)
 
     f_txt = open(path.join(result_folder, 'recog_result.txt'), 'w')
