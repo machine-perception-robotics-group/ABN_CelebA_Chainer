@@ -9,5 +9,22 @@ and,
 [ABN for image classification](https://github.com/machine-perception-robotics-group/attention_branch_network)
 
 
+## Citation
 
-
+```
+@article{fukui2018,
+	author = {Hiroshi Fukui and Tsubasa Hirakawa and Takayoshi Yamashita and Hironobu Fujiyoshi},
+	title = {Attention Branch Network: Learning of Attention Mechanism for Visual Explanation},
+	journal = {Computer Vision and Pattern Recognition},
+	year = {2019},
+	pages = {10705-10714}
+}
+```
+```
+@article{fukui2018,  
+	author = {Hiroshi Fukui and Tsubasa Hirakawa and Takayoshi Yamashita and Hironobu Fujiyoshi},  
+	title = {Attention Branch Network: Learning of Attention Mechanism for Visual Explanation},  
+	journal = {arXiv preprint arXiv:1812.10025},  
+	year = {2018}  
+}  
+```
