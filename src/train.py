@@ -1,16 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''
-How to run：
-Multi Layer Perceptron
->> python train.py --model MLP.py
-Deep Convolutional Neural Network
->> python train.py --model Cifar10.py
-GPU mode
->> python train.py --gpu 0
-'''
-
 import argparse
 import imp
 import numpy as np
@@ -40,18 +30,9 @@ from chainer.links.model.vision.resnet import ResNet101Layers
 
 
 def get_model_optimizer(result_folder, cfg_mod):
-    '''
-    学習するネットワークモデルの構築
-    パラメータの更新方法を選択
-    '''
     model_fn = path.basename(cfg_mod.SRC_MODEL)
     src_model = imp.load_source(model_fn.split('.')[0], path.join(result_folder, cfg_mod.SRC_MODEL)).src_model
 
-    # モデルをGPUに保存
-    #if cfg_mod.GPU_FLAG >= 0:
-    #    src_model.to_gpu()
-
-    # パラメータの更新方法を指定
     if cfg_mod.OPT_PARAM == 'AdaGrad':
         optimizer = optimizers.AdaGrad(lr=cfg_mod.TRAIN_RATE, eps=cfg_mod.EPS)
     elif cfg_mod.OPT_PARAM == 'MomentumSGD':
@@ -82,11 +63,6 @@ def parse_arguments():
 
 
 def load_module(module_path):
-    '''
-    module_path: モジュールへのパス(フォルダ・拡張子含む)
-
-    return ロードされたモジュール
-    '''
     head, tail = path.split(module_path)
     module_name = path.splitext(tail)[0]
     info = imp.find_module(module_name, [head])
@@ -105,7 +81,6 @@ if __name__ == '__main__':
     cfg_mod = load_module(args.src_train_config_path)
     result_folder = path.dirname(args.src_train_config_path)
 
-    # ネットワークとoptimizerの構築
     model, optimizer = get_model_optimizer(result_folder, cfg_mod)
 
     pretrained_model = ResNet101Layers()
@@ -115,15 +90,12 @@ if __name__ == '__main__':
     model.res4.copyparams(pretrained_model.res4)
     model.res5.copyparams(pretrained_model.res5)
 
-
-    # 学習＆評価サンプルの取得
     print('Convert training sample...')
     train_data = CelebA_Dataset(cfg_mod=cfg_mod, train=True)
     train_datas = chainer.datasets.TransformDataset(train_data, transform)
     test_data  = CelebA_Dataset(cfg_mod=cfg_mod, train=False)
     test_datas = chainer.datasets.TransformDataset(test_data, transform)
 
-    # 学習と評価のループ
     train_iter = chainer.iterators.SerialIterator(train_datas, cfg_mod.BATCH_SIZE)
     test_iter = chainer.iterators.SerialIterator(test_datas, cfg_mod.BATCH_SIZE, repeat=False, shuffle=False)
 
