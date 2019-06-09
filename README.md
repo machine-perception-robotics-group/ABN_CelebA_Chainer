@@ -28,3 +28,16 @@ and,
 	year = {2018}  
 }  
 ```
+
+## Detail
+Our ABN for for CelebA is written by [chainer](https://github.com/chainer/chainer). 
+Requirements of chainer version is as follows, and we published the [DockerHub](https://cloud.docker.com/u/fhiro0125/repository/docker/fhiro0125/chainercv_07_1).
+- chainer : 2.1.0
+- cupy : 1.0.3
+
+run commands of train and test are follows:
+
+> python train.py CelebA_Multi-task_Recognition_attention-sig_itr3/train_param.py
+
+> python test.py CelebA_Multi-task_Recognition_attention-sig_itr3/train_param.py
+
